@@ -1,0 +1,17 @@
+---
+import Base from '../../../layouts/Base.astro';
+---
+<Base titulo="Buscar" descripcion="Busca figuras, series, personajes, productos de Pokémon y videojuegos en Botín Friki.">
+  <Fragment slot="head">
+    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+    <script src="/pagefind/pagefind-ui.js" is:inline></script>
+    <script src="/js/buscar.js" is:inline></script>
+    <meta name="robots" content="noindex" />
+  </Fragment>
+  <div class="contenedor pagina" data-pagefind-ignore>
+    <h1 class="titulo">Buscar</h1>
+    <p>La búsqueda se hace en tu propio navegador: no guardamos ni enviamos lo que buscas.</p>
+    <div id="buscador"></div>
+    <noscript><p>El buscador necesita JavaScript. Mientras tanto, puedes ir al <a href="/es/#calendario">calendario</a>.</p></noscript>
+  </div>
+</Base>

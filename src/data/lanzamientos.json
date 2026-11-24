@@ -1,0 +1,11 @@
+{
+  "ejemplo": true,
+  "nota": "Datos de ejemplo. Se sustituirán por los reales cuando la cuenta de Amazon Afiliados esté aprobada y la Creators API devuelva productos.",
+  "lanzamientos": [
+    { "fecha": "2026-12-04", "personaje": "[Personaje]", "linea": "Grandista", "serie": "One Piece", "tamano": "[Tamaño]", "nota": "[Nota propia: para quién es ideal]", "url": null },
+    { "fecha": "2026-12-11", "personaje": "[Personaje]", "linea": "Q posket", "serie": "Sailor Moon", "tamano": "[Tamaño]", "nota": "[Nota propia: para quién es ideal]", "url": null },
+    { "fecha": "2026-12-11", "personaje": "[Personaje]", "linea": "Glitter & Glamours", "serie": "Dragon Ball Z", "tamano": "[Tamaño]", "nota": "[Nota propia: para quién es ideal]", "url": null },
+    { "fecha": "2026-12-18", "personaje": "[Personaje]", "linea": "DXF", "serie": "Naruto Shippuden", "tamano": "[Tamaño]", "nota": "[Nota propia: para quién es ideal]", "url": null },
+    { "fecha": "2026-12-23", "personaje": "[Personaje]", "linea": "Q posket", "serie": "Spy x Family", "tamano": "[Tamaño]", "nota": "[Nota propia: para quién es ideal]", "url": null }
+  ]
+}

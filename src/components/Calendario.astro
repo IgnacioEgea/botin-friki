@@ -1,0 +1,83 @@
+---
+import Ficha from './Ficha.astro';
+
+interface Lanzamiento {
+  fecha: string;
+  personaje: string;
+  linea: string;
+  serie: string;
+  tamano: string;
+  nota: string;
+  url: string | null;
+}
+
+interface Props {
+  anio: number;
+  mes: number; // 1-12
+  lanzamientos: Lanzamiento[];
+}
+
+const { anio, mes, lanzamientos } = Astro.props;
+
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const DIAS_SEMANA = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+const prefijo = `${anio}-${String(mes).padStart(2, '0')}-`;
+
+const delMes = lanzamientos.filter((l) => l.fecha.startsWith(prefijo));
+const porDia = new Map<number, Lanzamiento[]>();
+for (const l of delMes) {
+  const dia = Number(l.fecha.slice(8, 10));
+  porDia.set(dia, [...(porDia.get(dia) ?? []), l]);
+}
+
+const primerDia = new Date(Date.UTC(anio, mes - 1, 1)).getUTCDay(); // 0 = domingo
+const huecosInicio = (primerDia + 6) % 7; // semana empezando en lunes
+const diasDelMes = new Date(Date.UTC(anio, mes, 0)).getUTCDate();
+
+type Celda = { tipo: 'hueco' } | { tipo: 'dia'; numero: number; cuantos: number };
+const celdas: Celda[] = [];
+for (let i = 0; i < huecosInicio; i++) celdas.push({ tipo: 'hueco' });
+for (let n = 1; n <= diasDelMes; n++) celdas.push({ tipo: 'dia', numero: n, cuantos: porDia.get(n)?.length ?? 0 });
+while (celdas.length % 7 !== 0) celdas.push({ tipo: 'hueco' });
+
+const diasConLanzamientos = [...porDia.keys()].sort((a, b) => a - b);
+const nombreDia = (n: number) => DIAS_SEMANA[(new Date(Date.UTC(anio, mes - 1, n)).getUTCDay() + 6) % 7];
+const figuras = (c: number) => `${c} ${c === 1 ? 'figura' : 'figuras'}`;
+const titulo = `${MESES[mes - 1]} ${anio}`;
+---
+<section id="calendario" class="calendario" aria-labelledby="titulo-calendario">
+  <div class="mes panel">
+    <div class="mes-cabecera">
+      <h2 id="titulo-calendario" class="titulo">{titulo}</h2>
+    </div>
+    <div class="rejilla dias-semana" aria-hidden="true">
+      <div>L</div><div>M</div><div>X</div><div>J</div><div>V</div><div>S</div><div>D</div>
+    </div>
+    <ul class="rejilla" role="list" aria-label={`Días de ${titulo}`} style="list-style: none; margin: 0; padding: 0;">
+      {celdas.map((c) =>
+        c.tipo === 'hueco' ? (
+          <li class="dia dia-hueco" aria-hidden="true"></li>
+        ) : c.cuantos > 0 ? (
+          <li>
+            <a class="dia dia-con" href={`#dia-${c.numero}`} aria-label={`${c.numero} de ${MESES[mes - 1]}: ${figuras(c.cuantos)}`}>
+              {c.numero}<span>{figuras(c.cuantos)}</span>
+            </a>
+          </li>
+        ) : (
+          <li class="dia dia-vacio">{c.numero}</li>
+        )
+      )}
+    </ul>
+    <p class="leyenda">Los días resaltados tienen lanzamientos y dicen cuántas figuras salen. Pulsa uno para ir a sus figuras.</p>
+  </div>
+
+  <div class="lista-dias">
+    {diasConLanzamientos.length === 0 && <p>Todavía no hay lanzamientos anunciados para este mes.</p>}
+    {diasConLanzamientos.map((dia) => (
+      <>
+        <h3 id={`dia-${dia}`} class="titulo">{nombreDia(dia)} {dia} de {MESES[mes - 1]}</h3>
+        {(porDia.get(dia) ?? []).map((l) => <Ficha {...l} />)}
+      </>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,100 @@
+---
+import Base from '../../layouts/Base.astro';
+import Calendario from '../../components/Calendario.astro';
+import datos from '../../data/lanzamientos.json';
+
+const lanzamientos = [...datos.lanzamientos].sort((a, b) => a.fecha.localeCompare(b.fecha));
+const hoy = new Date().toISOString().slice(0, 10);
+const futuros = lanzamientos.filter((l) => l.fecha >= hoy);
+const proximos = (futuros.length > 0 ? futuros : lanzamientos.slice(-3)).slice(0, 3);
+
+const referencia = proximos[0]?.fecha ?? hoy;
+const anio = Number(referencia.slice(0, 4));
+const mes = Number(referencia.slice(5, 7));
+
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const fechaCorta = (f: string) => `${Number(f.slice(8, 10))} de ${MESES[Number(f.slice(5, 7)) - 1]}`;
+---
+<Base
+  titulo="Botín Friki"
+  descripcion="Calendario de lanzamientos de figuras Banpresto por serie, personaje y línea, con productos de Pokémon y videojuegos. Sin registros y sin cookies."
+>
+  <div class="contenedor">
+    <section class="portada" aria-labelledby="titulo-portada">
+      <div class="portada-principal panel sombra">
+        <p class="etiqueta">CAPÍTULO 1 · CALENDARIO BANPRESTO</p>
+        <h1 id="titulo-portada" class="titulo">Que no se te escape ninguna figura</h1>
+        <p class="entradilla">Los lanzamientos de Banpresto por serie, personaje y línea. Eliges, comparas y vas a la tienda. Sin registros y sin cookies.</p>
+        <form class="buscador-grande" role="search" action="/es/buscar/" method="get">
+          <div class="campo">
+            <label for="busca-portada">Busca una serie o un personaje</label>
+            <input id="busca-portada" name="q" type="search" placeholder="Ej.: One Piece, Goku, Frieren…" autocomplete="off" />
+          </div>
+          <button class="boton boton-acento sombra-s" type="submit">Buscar</button>
+        </form>
+      </div>
+
+      <aside class="semana" aria-labelledby="titulo-semana">
+        <h2 id="titulo-semana" class="titulo">Próximos lanzamientos</h2>
+        <ul>
+          {proximos.map((l) => (
+            <li>
+              <div><strong>{l.personaje} · {l.linea}</strong></div>
+              <div class="meta">{l.serie} · {fechaCorta(l.fecha)}</div>
+            </li>
+          ))}
+        </ul>
+        <a href="#calendario">Ver el mes completo →</a>
+        {datos.ejemplo && <p class="aviso-ejemplo">Datos de ejemplo</p>}
+      </aside>
+    </section>
+
+    <Calendario anio={anio} mes={mes} lanzamientos={lanzamientos} />
+
+    <section class="bloque" aria-labelledby="titulo-regalo">
+      <div class="regalo panel sombra-acento">
+        <div style="flex: 1 1 340px;">
+          <h2 id="titulo-regalo">¿Buscas un regalo y no sabes nada de anime?</h2>
+          <p style="margin: 0; color: var(--texto2);">Dinos qué le gusta y cuánto quieres gastar. Te damos tres ideas sin jerga.</p>
+        </div>
+        <form action="/es/regalos/" method="get">
+          <div class="campo">
+            <label for="regalo-fandom">Le gusta</label>
+            <select id="regalo-fandom" name="fandom">
+              <option value="one-piece">One Piece</option>
+              <option value="pokemon">Pokémon</option>
+              <option value="dragon-ball">Dragon Ball</option>
+              <option value="videojuegos">Videojuegos</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="regalo-presupuesto">Presupuesto</label>
+            <select id="regalo-presupuesto" name="presupuesto">
+              <option value="20">Hasta 20 €</option>
+              <option value="40">Hasta 40 €</option>
+              <option value="80">Hasta 80 €</option>
+            </select>
+          </div>
+          <button class="boton boton-tinta" type="submit">Ver ideas</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="bloque" aria-labelledby="titulo-capitulos">
+      <h2 id="titulo-capitulos" class="titulo" style="font-size: 1.875rem; margin-bottom: 20px;">Siguientes capítulos</h2>
+      <div class="tarjetas">
+        <a class="tarjeta panel sombra-s" href="/es/pokemon/"><strong>Pokémon</strong><span>Cartas, fundas, carpetas y peluches. Si no hay stock, lo decimos.</span></a>
+        <a class="tarjeta panel sombra-s" href="/es/videojuegos/"><strong>Videojuegos</strong><span>En tendencia, ediciones que compensan y dónde comprarlas.</span></a>
+        <a class="tarjeta panel sombra-s" href="/es/figuras/"><strong>Original o falsa</strong><span>Cómo distinguir una figura Banpresto auténtica antes de pagar.</span></a>
+      </div>
+    </section>
+
+    <section class="banda" aria-labelledby="titulo-banda">
+      <div style="flex: 1 1 420px;">
+        <h2 id="titulo-banda" class="titulo">Sin cuentas. Sin cookies. Sin trampas.</h2>
+        <p>Vivimos de comisiones marcadas y de tu apoyo voluntario. También te decimos cuándo algo no merece la pena.</p>
+      </div>
+      <a class="boton boton-tinta" href="/es/apoyar/">Apoyar el proyecto</a>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,30 @@
+---
+interface Props {
+  personaje: string;
+  linea: string;
+  serie: string;
+  tamano: string;
+  nota: string;
+  url: string | null;
+}
+
+const { personaje, linea, serie, tamano, nota, url } = Astro.props;
+---
+<article class="ficha panel sombra-s">
+  <div class="ficha-imagen">Imagen (API)</div>
+  <div class="ficha-texto">
+    <h4 class="ficha-nombre">{personaje} · {linea}</h4>
+    <div class="meta">{serie} · Banpresto</div>
+    <div class="ficha-nota">{tamano} · {nota}</div>
+  </div>
+  <div class="ficha-accion">
+    {url ? (
+      <>
+        <a class="boton boton-acento boton-pequeno" href={url} rel="sponsored noopener" target="_blank">Ver en Amazon<span class="visualmente-oculto"> (se abre en una pestaña nueva)</span></a>
+        <div class="ficha-afiliado">Enlace de afiliado</div>
+      </>
+    ) : (
+      <span class="boton-apagado">Enlace disponible pronto</span>
+    )}
+  </div>
+</article>
