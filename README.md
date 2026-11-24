@@ -27,4 +27,4 @@ npm run build    # genera dist/ y el índice del buscador
 
 ## Despliegue
 
-Cloudflare Pages · comando de build `npm run build` · carpeta de salida `dist` · Node 22.
+Publicada en https://botin-friki.pages.dev · Cloudflare Pages · comando de build `npm run build` · carpeta de salida `dist` · Node 22.
