@@ -2,6 +2,7 @@
 interface Props {
   nombre: string;
   linea: string;
+  marca?: string;
   serie: string;
   tamano: string;
   nota: string;
@@ -9,13 +10,13 @@ interface Props {
   url: string | null;
 }
 
-const { nombre, linea, serie, tamano, nota, fuente, url } = Astro.props;
+const { nombre, linea, marca = 'Banpresto', serie, tamano, nota, fuente, url } = Astro.props;
 ---
 <article class="ficha panel sombra-s">
   <div class="ficha-imagen">Imagen pendiente</div>
   <div class="ficha-texto">
     <h4 class="ficha-nombre">{nombre}</h4>
-    <div class="meta">{serie} · {linea} · Banpresto</div>
+    <div class="meta">{serie} · {linea} · {marca}</div>
     <div class="ficha-nota">{tamano}. {nota}</div>
     {fuente && <a class="ficha-fuente" href={fuente} rel="noopener" target="_blank">Ver el anuncio<span class="visualmente-oculto"> de {nombre} (se abre en una pestaña nueva)</span></a>}
   </div>
