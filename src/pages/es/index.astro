@@ -5,15 +5,23 @@ import datos from '../../data/lanzamientos.json';
 
 const lanzamientos = [...datos.lanzamientos].sort((a, b) => a.fecha.localeCompare(b.fecha));
 const hoy = new Date().toISOString().slice(0, 10);
-const futuros = lanzamientos.filter((l) => l.fecha >= hoy);
+const mesActual = hoy.slice(0, 7);
+// Un lanzamiento con solo mes sigue siendo "próximo" durante todo ese mes.
+const futuros = lanzamientos.filter((l) => (l.fecha.length === 7 ? l.fecha >= mesActual : l.fecha >= hoy));
 const proximos = (futuros.length > 0 ? futuros : lanzamientos.slice(-3)).slice(0, 3);
 
-const referencia = proximos[0]?.fecha ?? hoy;
-const anio = Number(referencia.slice(0, 4));
-const mes = Number(referencia.slice(5, 7));
+// Un calendario por cada mes con lanzamientos a partir del actual.
+const meses = [...new Set(futuros.map((l) => l.fecha.slice(0, 7)))].sort();
+if (meses.length === 0) meses.push(mesActual);
 
 const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-const fechaCorta = (f: string) => `${Number(f.slice(8, 10))} de ${MESES[Number(f.slice(5, 7)) - 1]}`;
+const fechaCorta = (f: string) =>
+  f.length === 7
+    ? `${MESES[Number(f.slice(5, 7)) - 1]} de ${f.slice(0, 4)}`
+    : `${Number(f.slice(8, 10))} de ${MESES[Number(f.slice(5, 7)) - 1]}`;
+const actualizado = datos.actualizado
+  ? `${Number(datos.actualizado.slice(8, 10))} de ${MESES[Number(datos.actualizado.slice(5, 7)) - 1]} de ${datos.actualizado.slice(0, 4)}`
+  : null;
 ---
 <Base
   titulo="Botín Friki"
@@ -39,17 +47,24 @@ const fechaCorta = (f: string) => `${Number(f.slice(8, 10))} de ${MESES[Number(f
         <ul>
           {proximos.map((l) => (
             <li>
-              <div><strong>{l.personaje} · {l.linea}</strong></div>
+              <div><strong>{l.nombre}</strong></div>
               <div class="meta">{l.serie} · {fechaCorta(l.fecha)}</div>
             </li>
           ))}
         </ul>
-        <a href="#calendario">Ver el mes completo →</a>
-        {datos.ejemplo && <p class="aviso-ejemplo">Datos de ejemplo</p>}
+        <a href={`#mes-${meses[0]}`}>Ver el calendario completo →</a>
+        {datos.ejemplo
+          ? <p class="aviso-ejemplo">Datos de ejemplo</p>
+          : actualizado && <p class="aviso-ejemplo">Actualizado el {actualizado}</p>}
       </aside>
     </section>
 
-    <Calendario anio={anio} mes={mes} lanzamientos={lanzamientos} />
+    <div id="calendario">
+      {meses.map((m) => (
+        <Calendario anio={Number(m.slice(0, 4))} mes={Number(m.slice(5, 7))} lanzamientos={lanzamientos} />
+      ))}
+    </div>
+    <p class="leyenda" style="margin-top: 24px;">Fechas según el anuncio enlazado en cada figura. Suelen ser fechas de salida en Japón o en tiendas de importación: en España pueden llegar más tarde.</p>
 
     <section class="bloque" aria-labelledby="titulo-regalo">
       <div class="regalo panel sombra-acento">

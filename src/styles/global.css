@@ -135,6 +135,8 @@ a:hover { color: var(--enlace-hover); }
 .ficha-nombre { font-weight: 700; font-size: 1.0625rem; margin: 0; }
 .ficha-nota { font-size: 0.875rem; margin-top: 6px; color: var(--suave); }
 .ficha-accion { flex: none; text-align: center; }
+.ficha-fuente { display: inline-block; margin-top: 6px; padding: 6px 0; font-size: 0.875rem; font-weight: 600; }
+.lista-limpia { list-style: none; margin: 0; padding: 0; }
 .ficha-afiliado { font-size: 0.75rem; margin-top: 4px; color: var(--texto2); }
 
 /* Bloques */

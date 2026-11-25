@@ -2,12 +2,13 @@
 import Ficha from './Ficha.astro';
 
 interface Lanzamiento {
-  fecha: string;
-  personaje: string;
+  fecha: string; // AAAA-MM-DD o AAAA-MM
+  nombre: string;
   linea: string;
   serie: string;
   tamano: string;
   nota: string;
+  fuente?: string;
   url: string | null;
 }
 
@@ -21,11 +22,13 @@ const { anio, mes, lanzamientos } = Astro.props;
 
 const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 const DIAS_SEMANA = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
-const prefijo = `${anio}-${String(mes).padStart(2, '0')}-`;
+const clave = `${anio}-${String(mes).padStart(2, '0')}`;
+const id = `mes-${clave}`;
 
-const delMes = lanzamientos.filter((l) => l.fecha.startsWith(prefijo));
+const delMes = lanzamientos.filter((l) => l.fecha.startsWith(clave));
+const sinDia = delMes.filter((l) => l.fecha.length === 7);
 const porDia = new Map<number, Lanzamiento[]>();
-for (const l of delMes) {
+for (const l of delMes.filter((x) => x.fecha.length === 10)) {
   const dia = Number(l.fecha.slice(8, 10));
   porDia.set(dia, [...(porDia.get(dia) ?? []), l]);
 }
@@ -45,21 +48,21 @@ const nombreDia = (n: number) => DIAS_SEMANA[(new Date(Date.UTC(anio, mes - 1, n
 const figuras = (c: number) => `${c} ${c === 1 ? 'figura' : 'figuras'}`;
 const titulo = `${MESES[mes - 1]} ${anio}`;
 ---
-<section id="calendario" class="calendario" aria-labelledby="titulo-calendario">
+<section id={id} class="calendario" aria-labelledby={`titulo-${id}`}>
   <div class="mes panel">
     <div class="mes-cabecera">
-      <h2 id="titulo-calendario" class="titulo">{titulo}</h2>
+      <h2 id={`titulo-${id}`} class="titulo">{titulo}</h2>
     </div>
     <div class="rejilla dias-semana" aria-hidden="true">
       <div>L</div><div>M</div><div>X</div><div>J</div><div>V</div><div>S</div><div>D</div>
     </div>
-    <ul class="rejilla" role="list" aria-label={`Días de ${titulo}`} style="list-style: none; margin: 0; padding: 0;">
+    <ul class="rejilla lista-limpia" aria-label={`Días de ${titulo}`}>
       {celdas.map((c) =>
         c.tipo === 'hueco' ? (
           <li class="dia dia-hueco" aria-hidden="true"></li>
         ) : c.cuantos > 0 ? (
           <li>
-            <a class="dia dia-con" href={`#dia-${c.numero}`} aria-label={`${c.numero} de ${MESES[mes - 1]}: ${figuras(c.cuantos)}`}>
+            <a class="dia dia-con" href={`#${id}-dia-${c.numero}`} aria-label={`${c.numero} de ${MESES[mes - 1]}: ${figuras(c.cuantos)}`}>
               {c.numero}<span>{figuras(c.cuantos)}</span>
             </a>
           </li>
@@ -68,16 +71,26 @@ const titulo = `${MESES[mes - 1]} ${anio}`;
         )
       )}
     </ul>
-    <p class="leyenda">Los días resaltados tienen lanzamientos y dicen cuántas figuras salen. Pulsa uno para ir a sus figuras.</p>
+    <p class="leyenda">
+      {sinDia.length > 0
+        ? `Este mes salen ${figuras(delMes.length)}. Banpresto suele anunciar solo el mes: cuando se confirme el día, aparecerá resaltado en el calendario.`
+        : 'Los días resaltados tienen lanzamientos y dicen cuántas figuras salen. Pulsa uno para ir a sus figuras.'}
+    </p>
   </div>
 
   <div class="lista-dias">
-    {diasConLanzamientos.length === 0 && <p>Todavía no hay lanzamientos anunciados para este mes.</p>}
+    {delMes.length === 0 && <p>Todavía no hay lanzamientos anunciados para este mes.</p>}
     {diasConLanzamientos.map((dia) => (
       <>
-        <h3 id={`dia-${dia}`} class="titulo">{nombreDia(dia)} {dia} de {MESES[mes - 1]}</h3>
+        <h3 id={`${id}-dia-${dia}`} class="titulo">{nombreDia(dia)} {dia} de {MESES[mes - 1]}</h3>
         {(porDia.get(dia) ?? []).map((l) => <Ficha {...l} />)}
       </>
     ))}
+    {sinDia.length > 0 && (
+      <>
+        <h3 class="titulo">En {MESES[mes - 1]}, sin día confirmado</h3>
+        {sinDia.map((l) => <Ficha {...l} />)}
+      </>
+    )}
   </div>
 </section>

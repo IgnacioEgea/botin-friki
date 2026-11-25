@@ -1,11 +1,107 @@
 {
-  "ejemplo": true,
-  "nota": "Datos de ejemplo. Se sustituirán por los reales cuando la cuenta de Amazon Afiliados esté aprobada y la Creators API devuelva productos.",
+  "ejemplo": false,
+  "nota": "Fechas según el anuncio enlazado en cada figura. 'fecha' es AAAA-MM-DD si hay día confirmado o AAAA-MM si solo se conoce el mes. Son fechas de salida anunciadas (normalmente en Japón o en tiendas de importación); en España pueden llegar más tarde.",
+  "actualizado": "2026-11-25",
   "lanzamientos": [
-    { "fecha": "2026-12-04", "personaje": "[Personaje]", "linea": "Grandista", "serie": "One Piece", "tamano": "[Tamaño]", "nota": "[Nota propia: para quién es ideal]", "url": null },
-    { "fecha": "2026-12-11", "personaje": "[Personaje]", "linea": "Q posket", "serie": "Sailor Moon", "tamano": "[Tamaño]", "nota": "[Nota propia: para quién es ideal]", "url": null },
-    { "fecha": "2026-12-11", "personaje": "[Personaje]", "linea": "Glitter & Glamours", "serie": "Dragon Ball Z", "tamano": "[Tamaño]", "nota": "[Nota propia: para quién es ideal]", "url": null },
-    { "fecha": "2026-12-18", "personaje": "[Personaje]", "linea": "DXF", "serie": "Naruto Shippuden", "tamano": "[Tamaño]", "nota": "[Nota propia: para quién es ideal]", "url": null },
-    { "fecha": "2026-12-23", "personaje": "[Personaje]", "linea": "Q posket", "serie": "Spy x Family", "tamano": "[Tamaño]", "nota": "[Nota propia: para quién es ideal]", "url": null }
+    {
+      "fecha": "2026-12",
+      "nombre": "Grandista Hibari Kyoya",
+      "linea": "Grandista",
+      "serie": "Katekyo Hitman Reborn!",
+      "tamano": "Tamaño por confirmar",
+      "nota": "Figura grande del presidente del comité disciplinario de Namimori.",
+      "fuente": "https://www.toy-people.com/en/?p=111219",
+      "url": null
+    },
+    {
+      "fecha": "2026-12",
+      "nombre": "SOFVIMATES Blastoise",
+      "linea": "SOFVIMATES",
+      "serie": "Pokémon",
+      "tamano": "Tamaño por confirmar",
+      "nota": "Figura de vinilo blando; tercera entrega de la línea por el 30 aniversario de Pokémon.",
+      "fuente": "https://www.toy-people.com/en/?p=114623",
+      "url": null
+    },
+    {
+      "fecha": "2026-12",
+      "nombre": "WCF Special Figarland Shamrock Saint",
+      "linea": "World Collectable Figure",
+      "serie": "One Piece",
+      "tamano": "Unos 10 cm de alto",
+      "nota": "Figura pequeña de la línea coleccionable WCF.",
+      "fuente": "https://www.toy-people.com/en/?p=112614",
+      "url": null
+    },
+    {
+      "fecha": "2026-12",
+      "nombre": "Master Stars Nami (Denver Nuggets)",
+      "linea": "Master Stars",
+      "serie": "One Piece × NBA",
+      "tamano": "Tamaño por confirmar",
+      "nota": "Parte de la colaboración de One Piece con la NBA.",
+      "fuente": "https://www.siliconera.com/one-piece-x-nba-master-stars-figures-release-schedule-set/",
+      "url": null
+    },
+    {
+      "fecha": "2026-12",
+      "nombre": "Master Stars Sanji (Indiana Pacers)",
+      "linea": "Master Stars",
+      "serie": "One Piece × NBA",
+      "tamano": "Tamaño por confirmar",
+      "nota": "Parte de la colaboración de One Piece con la NBA.",
+      "fuente": "https://www.siliconera.com/one-piece-x-nba-master-stars-figures-release-schedule-set/",
+      "url": null
+    },
+    {
+      "fecha": "2027-01",
+      "nombre": "Grandista Meruem",
+      "linea": "Grandista",
+      "serie": "Hunter × Hunter",
+      "tamano": "Unos 23 cm de alto",
+      "nota": "El rey de las hormigas quimera en la línea de gran tamaño.",
+      "fuente": "https://www.toy-people.com/en/?p=112114",
+      "url": null
+    },
+    {
+      "fecha": "2027-01",
+      "nombre": "Grandista Biscuit Oliva",
+      "linea": "Grandista",
+      "serie": "Baki",
+      "tamano": "27 cm de alto",
+      "nota": "Llega después del Grandista de Yujiro Hanma.",
+      "fuente": "https://www.toy-people.com/en/?p=112615",
+      "url": null
+    },
+    {
+      "fecha": "2027-01",
+      "nombre": "Grandista Son Goku Super Saiyan",
+      "linea": "Grandista",
+      "serie": "Dragon Ball Z",
+      "tamano": "Tamaño por confirmar",
+      "nota": "Nueva versión de un Grandista muy buscado.",
+      "fuente": "https://www.entertainmentearth.com/s/banpresto/c",
+      "url": null
+    },
+    {
+      "fecha": "2027-01",
+      "nombre": "Battle Record Collection Sanji III",
+      "linea": "Battle Record Collection",
+      "serie": "One Piece",
+      "tamano": "Tamaño por confirmar",
+      "nota": "Tercera figura de Sanji en esta línea de combate.",
+      "fuente": "https://www.entertainmentearth.com/s/banpresto/c",
+      "url": null
+    },
+    {
+      "fecha": "2027-01",
+      "nombre": "Maximatic Chainsaw Man",
+      "linea": "Maximatic",
+      "serie": "Chainsaw Man: arco de Reze",
+      "tamano": "Tamaño por confirmar",
+      "nota": "Basada en la película del arco de Reze.",
+      "fuente": "https://www.gundamplanet.com/products/chainsaw-man-the-movie-reze-arc-maximatic-chainsaw-man",
+      "url": null
+    }
   ]
 }
