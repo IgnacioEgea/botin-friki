@@ -1,0 +1,8 @@
+{
+  "nota": "Fuentes RSS que revisa la tarea diaria. Si una falla, se registra y se sigue con las demás.",
+  "palabrasClave": ["banpresto", "bandai spirits", "ichiban kuji", "grandista", "q posket", "qposket", "masterlise", "sofvimates", "glitter & glamours", "vibration stars", "maximatic"],
+  "fuentes": [
+    { "nombre": "Toy People", "rss": "https://www.toy-people.com/en/?feed=rss2" },
+    { "nombre": "Siliconera", "rss": "https://www.siliconera.com/feed/" }
+  ]
+}
