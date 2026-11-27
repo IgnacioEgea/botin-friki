@@ -1,0 +1,40 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import Ficha from '../../../../components/Ficha.astro';
+import datos from '../../../../data/lanzamientos.json';
+
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const mesActual = new Date().toISOString().slice(0, 7);
+const grandista = datos.lanzamientos
+  .filter((l) => l.linea === 'Grandista' && l.fecha.slice(0, 7) >= mesActual)
+  .sort((a, b) => a.fecha.localeCompare(b.fecha));
+const meses = [...new Set(grandista.map((l) => l.fecha.slice(0, 7)))];
+const nombreMes = (m: string) => `${MESES[Number(m.slice(5, 7)) - 1]} de ${m.slice(0, 4)}`;
+---
+<Base
+  titulo="Grandista: próximas figuras de Banpresto"
+  descripcion="Qué es la línea Grandista de Banpresto y qué figuras Grandista salen en los próximos meses, con enlace al anuncio de cada una."
+  seccion="figuras"
+>
+  <div class="contenedor pagina">
+    <nav aria-label="Migas de pan" class="meta" style="margin-bottom: 16px;">
+      <a href="/es/">Inicio</a> › <a href="/es/figuras/">Figuras anime</a> › Grandista
+    </nav>
+    <h1 class="titulo">Grandista</h1>
+    <p>Grandista es la línea de figuras grandes de Banpresto: personajes de anime en tamaño de vitrina, pensados para ser la pieza principal de una estantería. En los anuncios recientes miden entre unos 23 y 27 cm de alto.</p>
+    <p>En Japón salen como premios de máquinas de gancho, así que su precio en tiendas suele ser más bajo que el de otras figuras de ese tamaño. A España llegan por importación, normalmente algo después de su salida en Japón.</p>
+
+    <h2>Próximas Grandista</h2>
+    {grandista.length === 0 && <p>Ahora mismo no hay ninguna Grandista anunciada. El calendario se revisa cada día.</p>}
+    {meses.map((m) => (
+      <>
+        <h3 class="titulo" style="font-size: 1.25rem; margin: 32px 0 12px;">{nombreMes(m)}</h3>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          {grandista.filter((l) => l.fecha.startsWith(m)).map((l) => <Ficha {...l} />)}
+        </div>
+      </>
+    ))}
+
+    <p style="margin-top: 40px;"><a class="boton boton-acento" href="/es/#calendario">Ver todo el calendario</a></p>
+  </div>
+</Base>
